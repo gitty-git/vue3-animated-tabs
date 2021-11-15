@@ -1,15 +1,20 @@
 <template>
-    <div>
-        <div class="titles">
-            <div ref="tab1" class="title" v-for="(tab, id) in tabs" :key="tab.props.title" @click="selectTab(tab, id)">
-                {{ tab.props.title }}
+    <div class="tags">
+        <div class="tags-titles">
+            <div class="titles">
+                <div class="title" v-for="(tab, id) in tabs" :key="tab.props.title" @click="selectTab(tab, id)">
+                    {{ tab.props.title }}
+                </div>
+            </div>
+            <div class="indicator" ref="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="10" viewBox="0 0 133 68.222">
+                    <path id="Union_1" data-name="Union 1" d="M255.056,221H222l21.755-24.862.013-.015L277.212,157.9a15,15,0,0,1,22.577,0L326.125,188h0L355,221l0,0H255.056ZM355,221h0ZM355,221Z" transform="translate(-222 -152.779)" fill="#fff"/>
+                </svg>
             </div>
         </div>
-        <div class="indicator" ref="indicator"></div>
-        <div class="out-w" :style="{width: selectedWidth, height: selectedHeight}">
+        <div class="tags-body" :style="{width: selectedWidth, height: selectedHeight}">
             <slot/>
         </div>
-
     </div>
 </template>
 
@@ -26,7 +31,6 @@ export default {
         const selectedWidth = ref(selectedTab.value.props.width)
         const selectedHeight = ref(selectedTab.value.props.height)
         const indicator = ref(null)
-        const tab1 = ref(0)
 
         const selectTab = (tab, id) => {
             selectedTab.value = tab
@@ -34,42 +38,58 @@ export default {
             selectedWidth.value = tab.props.width
             selectedHeight.value = tab.props.height
 
-            indicator.value.style.left = `calc(calc(100% / ${tabs.value.length}) * ${id})`
+            indicator.value.style.left = `calc(${100 / tabs.value.length}% * ${id})`
         }
 
         onMounted(() => {
-            indicator.value.style.width = `${100 / tabs.value.length}%`
+            indicator.value.style.left = '0px'
+            indicator.value.style.width = `${Math.round(100 / tabs.value.length)}%`
         })
 
         provide('selectedTab', selectedTab)
 
-        return {selectedTab, tabs, selectedWidth, selectedHeight, selectTab, indicator, tab1}
+        return {selectedTab, tabs, selectedWidth, selectedHeight, selectTab, indicator}
     }
 }
 </script>
 
 <style scoped>
-.titles {
+.tags {
     display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+.tags-titles {
+    width: 50%;
+    display: flex;
+    flex-flow: column;
+    //align-items: center;
+    position: relative;
+}
+.titles {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 .title {
     width: 100%;
+    padding: 20px 0;
     text-align: center;
     cursor: pointer;
 }
 .indicator {
-    position: fixed;
+    text-align: center;
+    position: absolute;
+    margin-top: 50px;
     margin-bottom: 5px;
-    left: 50px;
-    background: blue;
-    height: 5px;
     transition: all 0.4s ease;
-    //width: 20px;
 }
-
-.out-w {
-    background: red;
+.tags-body {
+    margin-top: 5px;
+    background: white;
+    padding: 24px;
     transition: all 0.4s ease;
-//width: 100%;
+    border-radius: 7px;
+    box-shadow: 0 12px 25px 8px rgba(0,0,0,0.05);
 }
 </style>

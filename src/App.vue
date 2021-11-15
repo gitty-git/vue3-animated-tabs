@@ -1,9 +1,9 @@
 <template>
     <Tabs>
-        <Tab height="200px" width="20%" title="First" class="w-50">
+        <Tab height="300px" width="60%" title="First" class="w-50">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, libero?
         </Tab>
-        <Tab height="200px" width="30%" title="Second" class="w-30">
+        <Tab height="200px" width="20%" title="Second" class="w-30">
             Lorem ipsum dolor sit amet.
         </Tab>
         <Tab height="200px" width="40%" title="Third" class="w-20">
@@ -21,12 +21,15 @@ import { provide } from "vue";
 export default {
     name: 'App',
     components: {Tabs, Tab},
-    setup() {
-    }
 }
 </script>
 
 <style>
+body {
+    margin: 0;
+    padding: 0;
+    background: gainsboro;
+}
 .w-20 {
     width: 50%;
 }

@@ -1,6 +1,6 @@
 <template>
     <transition name="shift-in" appear>
-        <div class="absolute" v-show="title === selectedTab.props.title">
+        <div v-show="title === selectedTab.props.title">
             <slot/>
         </div>
     </transition>
@@ -20,22 +20,19 @@ export default {
 </script>
 
 <style scoped>
-.absolute {
-    position: absolute;
-    padding: 30px;
-}
 .shift-in-enter-from {
     opacity: 0;
     transform: translateX(200px);
 }
 .shift-in-enter-to {
-    position: absolute;
+    //position: absolute;
     transform: translateX(0px);
 }
 .shift-in-enter-active {
     transition: all 0.25s ease-out;
 }
 .shift-in-leave-from {
+    position: absolute;
     opacity: 0.0;
     transform: translateX(0px);
 }
@@ -44,6 +41,7 @@ export default {
     transform: translateX(-200px);
 }
 .shift-in-leave-active {
+    position: absolute;
     transition: all 0.25s ease-out;
 }
 .shift-in-move {
